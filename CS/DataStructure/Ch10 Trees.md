@@ -35,13 +35,13 @@
   - At depth k (< the deepest level) → **must be 2^k nodes**
   - At the deepest level → all the nodes are as far left as possible
 
-## Array Representation for Complete Binary Trees
+# Array Representation for Complete Binary Trees
 
 - `Root data` stored at [0]
 - `Left child` stored at [2i+1]
 - `Right child` stored at [2i+2]
 
-### Binary Tree Node Class - member variables
+# Binary Tree Node Class - member variables
 
 ```cpp
 template<class Item>
@@ -55,7 +55,7 @@ class binary_tree_node
 }
 ```
 
-### Binary Tree Node Class - member functions
+# Binary Tree Node Class - member functions
 
 - constructor
 - data() / const data()
@@ -66,7 +66,7 @@ class binary_tree_node
 - set_right(node)
 - is_leaf()
 
-#### ☑️ Constructor
+## ☑️ Constructor
 
 ```cpp
 binary_tree_node (const Item& init_data = Item(),
@@ -79,7 +79,7 @@ binary_tree_node (const Item& init_data = Item(),
 }
 ```
 
-#### ☑️ Data
+## ☑️ Data
 
 ```cpp
 // data
@@ -95,7 +95,7 @@ const Item& data() const
 }
 ```
 
-#### ☑️ Left/Right
+## ☑️ Left/Right
 
 ```cpp
 // left
@@ -113,7 +113,7 @@ const binary_tree_node*& left() const
 // right의 경우도 동일한 형식
 ```
 
-#### ☑️ Set data
+## ☑️ Set data
 
 ```cpp
 void set_data(const item& new_data) {data_field = new_data;}
@@ -123,7 +123,7 @@ void set_left(binary_tree_node* new_left) {left_field = new_left;}
 void set_right(binary_tree_node* new_right) {right_field = new_right;}
 ```
 
-#### ☑️ Is leaf
+## ☑️ Is leaf
 
 ```cpp
 bool is_leaf() const
@@ -134,12 +134,12 @@ bool is_leaf() const
 
 <br />
 
-### Tree Functions
+## Tree Functions
 
 - tree_clear(...)
 - tree_copy(...)
 
-#### ☑️ Tree Clear
+### ☑️ Tree Clear
 
 루트만 지울 경우 자식들이 메모리에 남아있기 때문에 모두 지워줘야 함
 
@@ -157,7 +157,7 @@ void tree_clear(binary_tree_node<Item>*& root_ptr)
 }
 ```
 
-#### ☑️ Tree Copy
+### ☑️ Tree Copy
 
 ```cpp
 binary_tree_node<Item>* tree_copy(binary_tree_node<Item>* root_ptr) {
@@ -266,8 +266,7 @@ void postorder_print (const binary_tree_node<Item>* root_ptr) {
 
 template <class Item, class SizeType>
 void print (
-	const binary_tree_node<Item>* root_ptr,
-	SizeType depth) {
+	const binary_tree_node<Item>* root_ptr, SizeType depth) {
 	if(root_ptr != NULL) {
 		print(root_ptr->right(), depth + 1);
 		cout << setw(4 * depth) << "" << root_ptr->data() << endl;
