@@ -45,13 +45,12 @@
 
 ```cpp
 template<class Item>
-class binary_tree_node
-{
-	...
-	private:
-		Item data_field; // for storing data
-		binary_tree_node* left_field; // pointer to left child
-		binary_tree_node* right_field; // pointer to right child
+class binary_tree_node {
+  ...
+  private:
+    Item data_field; // for storing data
+    binary_tree_node* left_field; // pointer to left child
+    binary_tree_node* right_field; // pointer to right child
 }
 ```
 
@@ -69,13 +68,10 @@ class binary_tree_node
 ## ☑️ Constructor
 
 ```cpp
-binary_tree_node (const Item& init_data = Item(),
-									binary_tree_node* init_left = NULL,
-									binary_tree_node* init_right = NULL)
-{
-	data_field = init_data;
-	left_field = init_left;
-	right_field = init_right;
+binary_tree_node (const Item& init_data = Item(), binary_tree_node* init_left = NULL, binary_tree_node* init_right = NULL) {
+  data_field = init_data;
+  left_field = init_left;
+  right_field = init_right;
 }
 ```
 
@@ -83,15 +79,13 @@ binary_tree_node (const Item& init_data = Item(),
 
 ```cpp
 // data
-Item& data()
-{
-	return data_field;
+Item& data() {
+  return data_field;
 }
 
 // const data
-const Item& data() const
-{
-	return data_field;
+const Item& data() const {
+  return data_field;
 }
 ```
 
@@ -99,15 +93,13 @@ const Item& data() const
 
 ```cpp
 // left
-binary_tree_node*& left()
-{
-	return left_field;
+binary_tree_node*& left() {
+  return left_field;
 }
 
 // const left
-const binary_tree_node*& left() const
-{
-	return left_field;
+const binary_tree_node*& left() const {
+  return left_field;
 }
 
 // right의 경우도 동일한 형식
@@ -126,9 +118,8 @@ void set_right(binary_tree_node* new_right) {right_field = new_right;}
 ## ☑️ Is leaf
 
 ```cpp
-bool is_leaf() const
-{
-	return (left_field == NULL && right_field == NULL);
+bool is_leaf() const {
+  return (left_field == NULL && right_field == NULL);
 }
 ```
 
@@ -145,15 +136,14 @@ bool is_leaf() const
 
 ```cpp
 template <class Item>
-void tree_clear(binary_tree_node<Item>*& root_ptr)
-{
-	if (root_ptr != NULL)
-	{
-		tree_clear(root_ptr->left());
-		tree_clear(root_ptr->right());
-		delete root_ptr;
-		root_ptr = NULL;
-	}
+void tree_clear(binary_tree_node<Item>*& root_ptr) {
+  if (root_ptr != NULL)
+  {
+    tree_clear(root_ptr->left());
+    tree_clear(root_ptr->right());
+    delete root_ptr;
+    root_ptr = NULL;
+  }
 }
 ```
 
@@ -161,17 +151,17 @@ void tree_clear(binary_tree_node<Item>*& root_ptr)
 
 ```cpp
 binary_tree_node<Item>* tree_copy(binary_tree_node<Item>* root_ptr) {
-	binary_tree_node<Item> *l_ptr;
-	binary_tree_node<Item> *r_ptr;
+  binary_tree_node<Item> *l_ptr;
+  binary_tree_node<Item> *r_ptr;
 
-	if(root_ptr == NULL)
-		return NULL;
-	else {
-		l_ptr = tree_copy(root_ptr->left());
-		r_ptr = tree_copy(root_ptr->right());
+  if(root_ptr == NULL)
+    return NULL;
+  else {
+    l_ptr = tree_copy(root_ptr->left());
+    r_ptr = tree_copy(root_ptr->right());
 
-		return new binary_tree_node<Item>(root_ptr->data(), l_ptr, r_ptr);
-	}
+    return new binary_tree_node<Item>(root_ptr->data(), l_ptr, r_ptr);
+  }
 }
 ```
 
@@ -199,11 +189,11 @@ Ex: printing or updating all data values in a tree
 ```cpp
 template <class Item>
 void preorder_print (const binary_tree_node<Item>* root_ptr) {
-	if(root_ptr != NULL) {
-		cout << root_ptr->data() << endl;
-		preorder_print(root_ptr->left());
-		preorder_print(root_ptr->right());
-	}
+  if(root_ptr != NULL) {
+    cout << root_ptr->data() << endl;
+    preorder_print(root_ptr->left());
+    preorder_print(root_ptr->right());
+  }
 }
 ```
 
@@ -220,11 +210,11 @@ void preorder_print (const binary_tree_node<Item>* root_ptr) {
 ```cpp
 template <class Item>
 void inorder_print (const binary_tree_node<Item>* root_ptr) {
-	if(root_ptr != NULL) {
-		inorder_print(root_ptr->left());
-		cout << root_ptr->data() << endl;
-		inorder_print(root_ptr->right());
-	}
+  if(root_ptr != NULL) {
+    inorder_print(root_ptr->left());
+    cout << root_ptr->data() << endl;
+    inorder_print(root_ptr->right());
+  }
 }
 ```
 
@@ -241,11 +231,11 @@ void inorder_print (const binary_tree_node<Item>* root_ptr) {
 ```cpp
 template <class Item>
 void postorder_print (const binary_tree_node<Item>* root_ptr) {
-	if(root_ptr != NULL) {
-		postorder_print(root_ptr->left());
-		postorder_print(root_ptr->right());
-		cout << root_ptr->data() << endl;
-	}
+  if(root_ptr != NULL) {
+    postorder_print(root_ptr->left());
+    postorder_print(root_ptr->right());
+    cout << root_ptr->data() << endl;
+  }
 }
 ```
 
@@ -265,13 +255,12 @@ void postorder_print (const binary_tree_node<Item>* root_ptr) {
 #include <iomanip> // setw()로 스페이스를 찍기 위해 필요
 
 template <class Item, class SizeType>
-void print (
-	const binary_tree_node<Item>* root_ptr, SizeType depth) {
-	if(root_ptr != NULL) {
-		print(root_ptr->right(), depth + 1);
-		cout << setw(4 * depth) << "" << root_ptr->data() << endl;
-		print(root_ptr->left(), depth + 1);
-	}
+void print (const binary_tree_node<Item>* root_ptr, SizeType depth) {
+  if(root_ptr != NULL) {
+    print(root_ptr->right(), depth + 1);
+    cout << setw(4 * depth) << "" << root_ptr->data() << endl;
+    print(root_ptr->left(), depth + 1);
+  }
 }
 
 print(root_ptr, 0);
@@ -291,11 +280,11 @@ print(root_ptr, 0);
 ```cpp
 template <class Process, class BTNode>
 void preorder(Process f, BTNode* node_ptr) {
-	if(node_ptr != NULL) {
-		f(node_ptr->data());
-		preorder(f, node_ptr->left());
-		preorder(f, node_ptr->right());
-	}
+  if(node_ptr != NULL) {
+    f(node_ptr->data());
+    preorder(f, node_ptr->left());
+    preorder(f, node_ptr->right());
+  }
 }
 
 ```
