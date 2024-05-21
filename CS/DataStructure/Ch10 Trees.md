@@ -288,3 +288,156 @@ void preorder(Process f, BTNode* node_ptr) {
 }
 
 ```
+
+<br />
+
+<div style="background-color: #777777">
+
+# Part 2
+
+</div>
+
+# Binary Search Trees
+
+1. Any data entry in the **left subtree** of a given node N is **less than or equal to** the data in node N
+
+2. Any data entry in the right subtree of a given node N is **larger than** the data in node N
+
+→ 왼쪽 서브트리가 부모 노드보다 작거나 같고, 오른쪽 서브 트리는 크다
+
+# Binary Search Tree Class
+
+```cpp
+template<class Item>
+class bag {
+  public:
+    ...
+  private:
+    binary_tree_node<Item>* root_ptr;
+}
+```
+
+# Binary Search Tree Class - Member Functions
+
+- constructor/destructor
+- insert(entry)
+- erase(target)
+- erase_one(target)
+- +=, =
+- size()
+- count(target)
+
+## ☑️ Constructor / Destructor
+
+- Constructor: set the root pointer to NULL
+
+- Copy Constructor: makes a copy of the source tree and lets the root pointer point to it
+
+- Destructor: releases all nodes of the tree
+
+## ☑️ Insert
+
+1. Create a new node with `entry` and let `new_ptr` point to it
+2. If the tree is empty → set `root_ptr` to `new_ptr`
+3. Else **do a binary search until an appropriate leaf node is found** make `new_ptr` the value of its left/right child field
+
+   - **Case 1: `entry` <= `node_ptr->data()`**
+
+     - if `node_ptr->left()`is NULL → `node_ptr->set_left(new_ptr)`
+     - else `node_ptr = node_ptr->left()`
+
+   - **Case 2: `entry` > `node_ptr->data()`**
+     - if `node_ptr->right()` is NULL → `node_ptr->set_right(new_ptr)`
+     - else `node_ptr = node_ptr->right()`
+
+## ☑️ Erase One
+
+> 1. Remove the largest item from the left subtree
+> 2. Restructure the left subtree after removal of the largest item
+> 3. Copy the removed item to the root node
+
+<br />
+
+- `bst_reomve(binary_tree_node<Item>*& root_ptr, const Item& target)`
+
+  - removes a node with target from the tree
+
+  1. If the tree is empty → return
+
+  2. If `target` < `root_ptr->data()` → `bst_remove(root_ptr->left(), target)`
+
+  3. Else if `target` > `root_ptr->data()` → `bst_remove(root_ptr->right(), target)`
+
+  4. Else `target` == `root_ptr->data()`
+     - Case A: The root has no left child
+       - delete the root
+       - make the right child the new root
+       ```cpp
+        oldroot_ptr = root_ptr;
+        root_ptr = root_ptr->right();
+        delete oldroot_ptr;
+       ```
+     - Case B: The root has a left child
+       - remove a node with the largest data from the left subtree
+       - copy that largest data to the root
+       ```cpp
+        bst_remove_max(root_ptr->left(), root_ptr->data());
+       ```
+
+- `bst_remove_max(binary_tree_node<Item>*& root_ptr, Item& removed)`
+
+  - removes a node with the largest data from the tree
+
+  - **Case 1: The root has no right child** → The root has the largest data
+
+    ```cpp
+    removed_Item = root_ptr->data(); // the root data is max
+    oldroot = root_ptr;
+    root_ptr = root_ptr->left(); // make the root's left child the new root
+    delete oldroot;
+    ```
+
+  - **Case 2: The root has a right child** → The largest data is in the right subtree
+
+    ```cpp
+    bst_remove_max(root_ptr->right(), removed_Item);
+    ```
+
+## ☑️ += Operator
+
+- `insert_all(tree_ptr)` function will insert each data item in the source tree(pointed by `tree_ptr`) → to our tree
+
+  ```cpp
+  template <class Item>
+  void bag<Item>::insert_all(const binary_tree_node<Item>* tree_ptr) {
+    if(tree_ptr != NULL) {
+      insert(tree_ptr->data()); // insert the root data
+      insert_all(tree_ptr->left()); // left subtree
+      insert_all(tree_ptr->right()); // right subtree
+    }
+  }
+  ```
+
+```cpp
+template <class Item>
+void bag<Item>::operator +=(const bag<Item>& addend) {
+  if (this == &addend) { // check for self addition
+    binary_tree_node<Item>* add_ptr = tree_copy(addend.root_ptr); // make a copy of itself
+    insert_all(add_ptr); // insert all data from the copy to itself
+    tree_clear(add_ptr); // clear the copy
+  } else {
+    insert_all(addend.root_ptr); // insert all the data from addend to itself
+  }
+}
+```
+
+## ☑️ Size
+
+counts the number of nodes in the tree
+→ 1 + Size(left subtree) + Size(right subtree)
+
+## ☑️ Assignment Operator
+
+1. Check for a self-assignment, if so → return
+2. Release all memory used by the current tree
+3. Copy the RHS's tree to self
