@@ -74,15 +74,17 @@ positive integer **`MININUM`**: 몇 개의 entries를 하나의 node에 저장�
 
 ### Rule 5:
 
-For any nonleaf node:
+- For any nonleaf node:
 
-a) An entry at index i is greater than all the entries in subtree number i of the node
+  a) An entry at index i is greater than all the entries in subtree number i of the node
 
-b) An entry at index i is smaller than all the entries in subtree number i+1 of the node
+  b) An entry at index i is smaller than all the entries in subtree number i+1 of the node
 
 ### Rule 6:
 
-Every leaf in a B-tree has the same depth
+- Every leaf in a B-tree has the same depth
+
+<br />
 
 # The Set (Template) Class using B-Trees
 
@@ -96,6 +98,8 @@ Item data[MAXIMUM + 1];
 size_t child_count;
 set* subset[MAXIMUM + 2];
 ```
+
+<br />
 
 ## Functions for set using B-Trees
 
@@ -113,6 +117,8 @@ set* subset[MAXIMUM + 2];
 
 - = (assignment operator)
 
+<br />
+
 ### ☑️ Count function
 
 returns 0 if the target is not found, or 1 if found
@@ -127,6 +133,8 @@ returns 0 if the target is not found, or 1 if found
 
 4. else return `subset[i]->count(target)`
 
+<br />
+
 ### ☑️ Insert function
 
 will use two private functions: `loose_insert` and `fix_excess`
@@ -137,7 +145,7 @@ if(!loose_insert(entry)) {
 }
 
 if(data_count > MAXIMUM) {
-  // fix the root of the entire tree
+  // To fix the root of the entire tree:
 
   // 1. Create a new root with no entries and let the old root be the child of the new root
   // 2. Call fix_excess on the old root
@@ -175,3 +183,121 @@ makes a subtree(semi-B-tree) whose root node has an extra entry into a regular B
 1. **Split** the node with MAXIMUM + 1 entries into **two nodes** each of which contains MINIMUM entries
 
 2. The entry in the middle is moved upward to the parent
+
+### ☑️ Erase function
+
+will use two private functions: `loose_erase` and `fix_shortage`
+
+```cpp
+if(!loose_erase(target)) {
+	return false // since target wasn't removed
+}
+
+if((data_count == 0) && (child_count == 1)) {
+	// fix the root of the entire tree
+}
+
+return true
+```
+
+### loose_erase
+
+removes an entry from the B-tree
+
+- with the possibility that the **root may have 0 entries** (but with one child)
+- or the **root of an internal subtree has fewer than `MINIMUM` entries**
+
+<br />
+
+1 . In the root, find the first index `i` such that `data[i]` >= entry
+
+- If no such `i` found, `i = data_count;`
+
+2a. if (the root has no child and target not found) return false
+
+2b. if (the root has no child and target found)
+
+- remove the target from the data array
+- and return true
+
+2c, d. else // the root has children
+
+2c. If the root has children and target **not found**
+
+- bool b = subset[i]->loose_erase(target);
+- Check if the root of subset[i] has MINIMUM-1 entries
+- If so, fix the subset[i] using the fix_shortage function
+
+2d. If the root has children and target **found**
+
+```cpp
+subset[i]->remove_biggest(data[i]);
+if(subset[i]->data_count < MINIMUM) {
+	fix_shortage(i);
+}
+return true;
+```
+
+### fix_shortage
+
+will take care of the shortage of an entry (if any) in the root of a subtree
+
+**Subset[i] has only MINIMUM-1 entries:**
+
+**✔️ Case 1. Transfer an extra entry from subset[i-1]**
+
+1. 루트의 마지막 entry를 subset[i](MINIMUM-1 entries를 가지고 있음)로 내림
+2. MINIMUM보다 많은 entries를 가지고 있는 subset[i-1]의 마지막 entry를 루트 노드로 올림
+   - reduce `subset[i-1]→data_count` by 1
+3. subset[i-1]의 마지막(맨 오른쪽) 자식 노드를 subset[i]의 첫번째(맨 왼쪽) 자식 노드로 변경
+
+<br />
+
+✔️ **Case 2. Transfer an extra entry from subset[i+1]**
+
+1. 루트의 마지막 entry를 subset[i](MINIMUM-1 entries를 가지고 있음)로 내림
+2. MINIMUM보다 많은 entries를 가지고 있는 subset[i+1]의 첫번째 entry를 루트 노드로 올림
+   - reduce `subset[i+1]→data_count` by 1
+3. subset[i+1]의 첫번째(맨 왼쪽) 자식 노드를 subset[i]의 마지막(맨 오른쪽) 자식 노드로 변경
+
+<br />
+
+✔️ **Case 3. Combine subset[i] with subset[i-1]**
+
+subset[i-1]이 MINIMUM entries고, subset[i]가 MINIMUM-1 entries인 경우
+
+1. 루트의 마지막 entry를 subset[i](MINIMUM-1 entries를 가지고 있음)로 내림
+2. subset[i-1]와 subset[i]를 하나의 노드로 Merge
+   1. subset[i]의 모든 items와 children을 subset[i-1]의 마지막에 transfer
+   2. subset[i] node를 삭제
+   3. subset[i+1]과 subset[i+2]를 왼쪽으로 이동
+   4. `child_count`를 1만큼 줄임
+
+<br />
+
+✔️ **Case 4. Combine subset[i] with subset[i+1]**
+
+subset[i]가 MINIMUM-1 entries고, subset[i+1]이 MINIMUM entries인 경우
+
+1. 루트의 마지막 entry를 subset[i](MINIMUM-1 entries를 가지고 있음)로 내림
+2. subset[i-1]와 subset[i]를 하나의 노드로 Merge
+   1. subset[i+1]의 모든 items와 children을 subset[i]의 마지막에 transfer
+   2. subset[i+1] node를 삭제
+   3. subset[i+2]과 subset[i+3]를 왼쪽으로 이동
+   4. `child_count`를 1만큼 줄임
+
+<br />
+
+### ☑️ remove_biggest(Item& removed_entry) function
+
+B-tree에서 가장 큰 item을 삭제함 → root에서 하나의 entry가 부족해질 수 있음
+
+1. root가 자식이 없다면:
+   - copy the last item of data → into `removed_entry`
+   - and reduce `data_count` by 1
+2. root가 자식이 있다면: rightmost child부터 biggest를 삭제
+
+```cpp
+subset[child_count-1]->remove_biggest(removed_entry);
+fix_shortage(child_count-1);
+```
