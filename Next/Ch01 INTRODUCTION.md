@@ -33,6 +33,11 @@ npm init -y
 npm install react@latest next@latest react-dom@latest
 ```
 
+- package.json 파일로 node.js 프로젝트 생성
+- react, next, react-dom install
+
+<br />
+
 ```json
 {
   "name": "learn-nextjs14",
@@ -53,12 +58,21 @@ npm install react@latest next@latest react-dom@latest
 }
 ```
 
+- `"next dev"` 명령어를 호출하는 script 추가
+  - 해당 명령어를 호출하면 → 자동으로 NextJS는 프레임워크로써 `app` 폴더를 참조하고 `page`라는 파일을 찾음
+
+<br />
+
 ```tsx
 // app/page.tsx
 export default function Tomato() {
   return <h1>Hello NextJS!</h1>;
 }
 ```
+
+- export default로 된 react 컴포넌트여야 함
+
+<br />
 
 ```
 npm run dev
