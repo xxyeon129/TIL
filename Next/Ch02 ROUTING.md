@@ -24,3 +24,36 @@
 - 가장 일반적인 것은 경로에 고유한 UI를 표시하는 페이지와 여러 경로에서 공유되는 UI를 표시하는 레이아웃
 
 - page.tsx가 있는 폴더에 components 폴더를 만들고 파일명이 page.tsx가 아닌 파일명 컴포넌트로 만든 후 page.tsx 파일에서 해당 컴포넌트를 import해서 써오는 방식도 존재 → url 경로로 작동하지 않음
+
+<br />
+
+# Not Found Routes
+
+## Not Found
+
+app 폴더의 root 경로에 not-found.tsx 파일 생성
+
+→ 설정하지 않은 url 경로에 접근 시 not-found.tsx 파일의 UI 렌더링
+
+## Link
+
+React와 동일하게 페이지 이동 시 a 태그가 아닌 `Link`를 사용
+
+```tsx
+import Link from 'next/link';
+
+<Link href="/">Home</Link>;
+```
+
+## usePathname
+
+현재 URL의 pathname을 읽을 수 있게 해주는 클라이언트 컴포넌트 훅
+
+```tsx
+import { usePathname } from 'next/navigation';
+const path = usePathname();
+```
+
+## React client hook in Server Component 오류
+
+서버 컴포넌트에서 React 클라이언트 훅을 사용하고 있을 때 발생하는 오류로 `"use client"` 를 추가해 클라이언트 컴포넌트로 바꿔줘야 함
