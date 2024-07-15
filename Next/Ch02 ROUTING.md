@@ -87,6 +87,7 @@ CRA만 사용할 경우 client side rendering → 모든 UI building이 client�
 
 > [!NOTE]
 > **rendering**
+>
 > Next.js가 React components(JS function)를 가져와서 → (React code를) 브라우저가 이해할 수 있는 HTML로 변환하는 작업
 
 Next.js로 웹사이트를 빌드할 때는 자동적으로(automatically) default로 server side rendering이 사용됨
