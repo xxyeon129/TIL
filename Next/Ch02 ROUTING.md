@@ -129,3 +129,24 @@ nav를 클릭했을 때 처음에는 anchor 묶음이었다가 → Link componen
 >
 > SSR을 통해 만들어진 non-interactive HTML을 client 측 JavaScript를 사용해 interacive한 React application으로 초기화(initialize)하는 작업
 > (서버 환경에서 이미 렌더링된 HTML에 React를 붙이는 것)
+
+<br />
+<br />
+
+# “use client”
+
+client component를 사용하려면 파일 상단, import 위에 `"use client"` 지시어를 추가하면 됨
+
+- `"use client"`는 서버와 클라언트 컴포넌트 모듈 간 경계를 선언하는 데 사용됨
+
+- client에서만 render된다는 의미는 아님. 하위 컴포넌트를 포함해 해당 파일로 가져온 다른 모든 모듈이 클라이언트 번들의 일부로 간주됨
+
+  - backend에서 render되고 frontend에서 hydrate/interactive됨을 의미함
+  - use client를 선언하지 않으면 기본적으로 모두 server component가 됨
+
+- use client components는 server에서 먼저 render되고나서 → hydrate됨
+
+- server component는 server에서 먼저 render 되고, hydrate는 되지 않음
+  - 사용자가 다운로드받아야 할 JavaScript의 양이 작아진다는 의미
+  - 페이지 로딩 속도 향상
+  - 사용자는 use client를 가진 components의 JavaScript 코드만 다운받게 되기 때문
