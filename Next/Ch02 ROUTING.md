@@ -187,10 +187,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ## Layout 중첩
 
-- 사용자가 있는 페이지에 따라 추가적인 레이아웃을 가질 수 있음 → 추가적으로 레이아웃을 적용하고 싶은 경로 폴더 내에 새로운 `layout.tsx` 파일을 만들어 적용
-  - metadata 삭제
-  - html, body 태그 삭제
-  - div 태그로 children 감싸기
+사용자가 있는 페이지에 따라 추가적인 레이아웃을 가질 수 있음 → 추가적으로 레이아웃을 적용하고 싶은 경로 폴더 내에 새로운 `layout.tsx` 파일을 만들어 적용
+
+- metadata 삭제
+- html, body 태그 삭제
+- div 태그로 children 감싸기
 
 ```tsx
 // app/about-us/layout.tsx
@@ -205,6 +206,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 }
 ```
 
+<br />
+
 Next.js는 상위 폴더로 이동하여 레이아웃이 있는지 확인하고 레이아웃이 있는 경우에는 이 레이아웃을 사용해 하위 항목을 렌더링함
 
 1. root `<Layout>`을 가져와 렌더링
@@ -216,6 +219,8 @@ Next.js는 상위 폴더로 이동하여 레이아웃이 있는지 확인하고 
 4. 있다면 root layout 내부에 해당 layout 위치
 
 5. 해당 URL 경로 폴더의 하위 모든 폴더 내에 layout 파일이 있는지 확인 → 없다면 페이지만 렌더링, 있으면 layout 내부에 layout 위치
+
+<br />
 
 > [!NOTE]
 >
