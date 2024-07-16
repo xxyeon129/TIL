@@ -86,7 +86,8 @@ CRA만 사용할 경우 client side rendering → 모든 UI building이 client�
 ## SSR; Server Side Rendering
 
 > [!NOTE]
-> **rendering**
+>
+> **rendering:**
 >
 > Next.js가 React components(JS function)를 가져와서 → (React code를) 브라우저가 이해할 수 있는 HTML로 변환하는 작업
 
@@ -104,3 +105,27 @@ Next.js로 웹사이트를 빌드할 때는 자동적으로(automatically) defau
 
 > [!CAUTION]
 > Next.js의 모든 컴포넌트와 페이지들은 먼저 backend(server side)에서 render된다 (`"use client"` 사용 여부와 상관 없음)
+
+<br />
+<br />
+
+# Hydration
+
+nav를 클릭했을 때 처음에는 anchor 묶음이었다가 → Link component가 처리 (client side only navigation 수행) → React component로 변환 → 페이지 전체를 새로고침하지 않고 빠르게 navigate할 수 있게 됨
+
+1. click
+
+2. 프레임워크(Next.js)는 클릭 요청을 보고 component를 UI를 가지고 있는 dummy HTML로 변환 (non-interactive, backend에서 생성)
+
+   - React app initialized에 시간이 걸리는 환경일 경우 UI는 보이지만 navigate할 경우 새로고침이 일어나게 됨
+
+3. HTML에 React, components.. load 시작 → React application initialized
+
+4. application이 React App이 됨 (interactive)
+
+> [!NOTE]
+>
+> **hydration:**
+>
+> SSR을 통해 만들어진 non-interactive HTML을 client 측 JavaScript를 사용해 interacive한 React application으로 초기화(initialize)하는 작업
+> (서버 환경에서 이미 렌더링된 HTML에 React를 붙이는 것)
