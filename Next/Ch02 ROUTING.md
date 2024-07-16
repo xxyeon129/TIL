@@ -1,4 +1,4 @@
-# Defining Routes
+# ☑️ Defining Routes
 
 ## Creating Routes
 
@@ -28,7 +28,7 @@
 <br />
 <br />
 
-# Not Found Routes
+# ☑️ Not Found Routes
 
 ## Not Found
 
@@ -62,7 +62,7 @@ const path = usePathname();
 <br />
 <br />
 
-# SSR vs CSR
+# ☑️ SSR vs CSR
 
 ## CSR; Client Side Rendering
 
@@ -109,7 +109,7 @@ Next.js로 웹사이트를 빌드할 때는 자동적으로(automatically) defau
 <br />
 <br />
 
-# Hydration
+# ☑️ Hydration
 
 nav를 클릭했을 때 처음에는 anchor 묶음이었다가 → Link component가 처리 (client side only navigation 수행) → React component로 변환 → 페이지 전체를 새로고침하지 않고 빠르게 navigate할 수 있게 됨
 
@@ -133,7 +133,7 @@ nav를 클릭했을 때 처음에는 anchor 묶음이었다가 → Link componen
 <br />
 <br />
 
-# “use client”
+# ☑️ “use client”
 
 client component를 사용하려면 파일 상단, import 위에 `"use client"` 지시어를 추가하면 됨
 
