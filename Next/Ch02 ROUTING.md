@@ -233,3 +233,54 @@ Next.js는 상위 폴더로 이동하여 레이아웃이 있는지 확인하고 
 > - layout.tsx 파일 안에서 렌더링하는 navigation.tsx 파일에서 분기 처리하는 것이 최선이지 않을까..?
 >
 > - 그렇게 되면 공통 컴포넌트를 제외하고 싶은 URL 경로에서도 일단 navigation.tsx 파일 자체를 실행하는 것이기 때문에, 화면상에 UI를 보여주지 않을 뿐, JavaScript 코드 자체는 실행하므로 성능상의 이점이 얼마나 있는지는 모르겠음
+
+<br />
+<br />
+
+# ☑️ Metadata
+
+Next.js에는 향상된 SEO를 위해 애플리케이션 metadata(ex: HTML head 엘리먼트 내의 meta 및 link 태그)를 정의하는 데 사용할 수 있는 metadata API가 존재
+
+## route groups
+
+- 폴더 이름을 괄호로 묶어서 사용 ex. (home)/page.tsx
+
+  - 괄호로 묶일 경우 **URL 경로를 생성하지 않음**
+  - 괄호 안 이름은 마음대로 해도 됨
+
+- root layout을 사용하지 않고 대신 여러 레이아웃을 사용할 수 있게 해줌
+
+- 레이아웃 중에서 선택하거나 선택 해제하여 사용할 수 있음 → 중첩 레이아웃을 원하지 않는 경우 route groups를 사용할 수 있음
+
+- metadata는 layout과 다르게 실제로는 중첩되지 않고 병합됨
+
+  - title, description이 각각 다른 파일의 metadata에 존재할 경우 실행 페이지에서 보면 병합되어 있음
+
+- page나 layout만 metadata를 내보낼 수 있음
+  - component에서는 metadata를 내보낼 수 없음
+  - metadata는 server component에서만 있을 수 있음 (client component에서 있을 수 없음)
+
+<br />
+
+## 중복되는 metadata에 대한 template
+
+```tsx
+// app/layout.tsx
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Next Movies',
+    default: 'Next Movies',
+  },
+  description: '',
+};
+
+// app/about-us/page.tsx
+export const metadata = {
+  title: 'About us',
+};
+
+// app/not-found.tsx
+export const metadata = {
+  title: 'Not found',
+};
+```
