@@ -260,8 +260,6 @@ Next.js에는 향상된 SEO를 위해 애플리케이션 metadata(ex: HTML head 
   - component에서는 metadata를 내보낼 수 없음
   - metadata는 server component에서만 있을 수 있음 (client component에서 있을 수 없음)
 
-<br />
-
 ## 중복되는 metadata에 대한 template
 
 ```tsx
@@ -283,4 +281,32 @@ export const metadata = {
 export const metadata = {
   title: 'Not found',
 };
+```
+
+<br />
+<br />
+
+# ☑️ Dy**namic Routes**
+
+- 동적 세그먼트는 폴더 이름을 대괄호로 묶어 생성 ex: movies/[id]
+  - Next.js에게 movies/ 뒤에 어떤 경로가 들어가도 괜찮다는 것을 알려주는 것
+- URL을 표시하려면 해당 폴더 내에 page.tsx 생성
+  - movies/121212 경로에 접근 시 해당 page.tsx UI가 표시됨
+
+```tsx
+// movies/[id]/page.tsx
+
+export default function MovieDetail(props) {
+  console.log(props); // backend 콘솔에서 표시됨
+  // { params: { id: '121212' }, searchParams: {} }
+  return <h1>Movie</h1>;
+}
+```
+
+/movies/3454545?region=kr&page=2 경로로 접근 시 콘솔에 표시되는 내용 → `{ params: { id: '3454545' }, searchParams: { region: ‘kr’, page: ‘2’ } }`
+
+```tsx
+export default function MovieDetail({ params: { id } }: { params: { id: string } }) {
+  return <h1>Movie {id}</h1>;
+}
 ```
