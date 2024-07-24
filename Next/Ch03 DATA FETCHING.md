@@ -52,3 +52,36 @@ use client라고 쓰인 component에서는 metadata를 export해오는 게 허�
 💡 server component기 때문에 metadata 사용 가능
 
 💡 API로 fetch하지 않음 (백엔드가 API 없이 직접 데이터베이스와 통신)
+
+<br />
+<br />
+
+# # Server Side
+
+```tsx
+// app/(home)/page.tsx
+
+export const metadata = {
+  title: 'Home',
+};
+
+const URL = 'https://...';
+
+async function getMovies() {
+  console.log('FETCHING'); // server component기 때문에 FE가 아닌 BE 콘솔에서 발생
+
+  // BE에서 5초를 기다리게 하는 테스트 코드 (UI가 아닌 브라우저 탭에 로딩 표시)
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  // return fetch(URL).then((response) => response.json());
+  const response = await fetch(URL);
+  const json = await response.json();
+  return json;
+}
+
+export default async function HomePage() {
+  const movies = await getMovies();
+
+  return <div>{JSON.stringify(movies)}</div>;
+}
+```
