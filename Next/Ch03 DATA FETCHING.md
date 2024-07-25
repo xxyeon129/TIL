@@ -117,3 +117,70 @@ export default function Loading() {
 >
 > - 파일명이 loading여야 함
 > - 로딩을 적용하고 싶은 경로의 page.tsx 파일과 같은 위치에 생성해야 함
+
+<br />
+<br />
+
+# Parallel Requests
+
+## 순차적으로 fetching할 경우
+
+```tsx
+// app/movies/[id]/page.tsx
+
+import { API_URL } from '../../(home)/page';
+
+async function getMovie(id: string) {
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+  console.log(`Fetching movies: ${Date.now()}`);
+
+  const response = await fetch(`${API_URL}/${id}`);
+  return response.json();
+}
+
+async function getVideos(id: string) {
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+  console.log(`Fetching videos: ${Date.now()}`);
+
+  const response = await fetch(`${API_URL}/${id}/videos`);
+  return response.json();
+}
+
+export default async function MovieDetail({ params: { id } }: { params: { id: string } }) {
+  console.log('start fetching');
+  const movie = await getMovie(id);
+  const video = await getVideos(id);
+  console.log('end fetching');
+
+  return <h1>{movie.title}</h1>;
+}
+```
+
+video까지 불러오는 데 5초+5초 -> 최소 10초가 걸림
+
+## Promise.all()을 사용해 한번에 fetching
+
+```tsx
+// app/movies/[id]/page.tsx
+
+...
+
+export default async function MovieDetail({ params: { id } }: { params: { id: string } }) {
+  console.log('start fetching');
+
+  const [movie, videos] = await Promise.all([getMovie(id), getVideos(id)]);
+
+  console.log('end fetching');
+
+  return <h1>{movie.title}</h1>;
+}
+
+```
+
+movie와 video를 동시에 받아오기 시작 → 총 5초에 받아옴 (순차적 작업 X)
+
+> [!NOTE]
+>
+> Promise.all()는 자바스크립트에서 여러 비동기 작업을 동시에 실행하고, 모든 작업이 완료될 때까지 기다렸다가 결과를 배열 형태로 반환하는 함수입니다. 쉽게 말해, 여러 Promise를 모두 이행할 때까지 기다린 후, 그 결과를 한꺼번에 받아볼 수 있게 해줍니다.
+>
+> Promise.all은 하나라도 reject되면 전체가 reject되므로 오류 처리를 잘 해준다면 여러 Promise의 비동기 처리를 할 때 유용하게 사용 가능
