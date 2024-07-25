@@ -184,3 +184,28 @@ movie와 video를 동시에 받아오기 시작 → 총 5초에 받아옴 (순�
 > Promise.all()는 자바스크립트에서 여러 비동기 작업을 동시에 실행하고, 모든 작업이 완료될 때까지 기다렸다가 결과를 배열 형태로 반환하는 함수입니다. 쉽게 말해, 여러 Promise를 모두 이행할 때까지 기다린 후, 그 결과를 한꺼번에 받아볼 수 있게 해줍니다.
 >
 > Promise.all은 하나라도 reject되면 전체가 reject되므로 오류 처리를 잘 해준다면 여러 Promise의 비동기 처리를 할 때 유용하게 사용 가능
+
+<br />
+<br />
+
+# Suspense
+
+Promise.all()로 fetching하는 방식은 동시에 시작해서 (둘 다 끝나기를 기다린 후) 한꺼번에 결과를 받을 수 있지만, 가장 긴 시간이 걸리는 함수가 완료될 때까지 기다려야 하는 단점이 존재함
+
+fetching이 먼저 끝나는 함수의 결과값부터 UI에 표시되도록 분리하려면 → `<Suspense>` 사용
+
+1. 컴포넌트 분리
+
+   - movie-info.tsx 파일과 movie-videos.tsx 파일에서 **개별적으로** fetching 함수가 수행되길 기다림
+
+2. 분리한 컴포넌트들을 표시하는 page.tsx에 각 컴포넌트를 `<Suspense>`로 감싸기
+
+   - Susense가 데이터를 fetch하기 위해 안에 있는 컴포넌트를 await함
+
+3. Suspense의 fallback prop 작성
+   - fallback prop: 컴포넌트가 await되는 동안(fetching하는 동안) 표시할 메세지를 render
+   - 다른 component를 render할 수 있는 것
+
+> [!NOTE]
+>
+> Suspense로 감싼 각 컴포넌트에서 별도로 로딩이 발생하기 때문에, 분리된 컴포넌트들을 표시하는 전체 페이지의 UI를 대체하는 loading 페이지가 필요 없음(fetching을 안하기 때문에 즉시 사용자에게 표시됨)
