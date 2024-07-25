@@ -56,7 +56,7 @@ use client라고 쓰인 component에서는 metadata를 export해오는 게 허�
 <br />
 <br />
 
-# # Server Side
+# Server Side
 
 ```tsx
 // app/(home)/page.tsx
@@ -85,3 +85,35 @@ export default async function HomePage() {
   return <div>{JSON.stringify(movies)}</div>;
 }
 ```
+
+<br />
+<br />
+
+# Loading Components
+
+> [!NOTE]
+>
+> server component에서 fetch할 경우 코드가 노출되지 않아 보안성이 있지만 (+ useState, useEffect를 사용하지 않음, metadata 사용 가능), 데이터를 불러오는데 긴 시간이 걸림
+>
+> 백엔드에서 fetch되기 때문에 → 백엔드에서는 렌더링 작업이 이루어지지 않고 → 사용자를 위한 UI가 존재하지 않음 (페이지가 데이터를 받아올 때까지 비어 있음)
+
+```tsx
+// app/(home)/loading.tsx
+
+export default function Loading() {
+  return <h2>Loading...</h2>;
+}
+```
+
+1. 사용자가 웹사이트 도착
+
+2. server component 함수 내의 fetch가 완료되기 전에는 loading.tsx에 있는 컴포넌트를 표시
+
+   - NextJS는 streaming을 사용해 페이지를 작은 HTML chunks로 나눠서 → 준비된 HTML chunks를 브라우저에게 줌 (navigation bar, loading component…)
+
+3. fetch 완료 → server component의 완료된 결과값(homepage html)을 브라우저에 표시
+
+> [!IMPORTANT]
+>
+> - 파일명이 loading여야 함
+> - 로딩을 적용하고 싶은 경로의 page.tsx 파일과 같은 위치에 생성해야 함
