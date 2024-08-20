@@ -4,13 +4,17 @@
 > - [this 바인딩 엄격모드](https://kwangsunny.tistory.com/40)
 > - [this 바인딩 규칙](https://seungtaek-overflow.tistory.com/21)
 
+<br />
+
 JavaScript 함수는 호출될 때 매개변수 인자값 이외에 arguments 객체, this를 암묵적으로 전달 받는다.
 
 함수 호출 방식에 의해 this에 바인딩할 어떤 객체가 동적으로 결정된다. 즉 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니라, 함수를 호출하는 시점에 함수가 어떤 방식으로 호출되었냐에 따라 this에 바인딩할 객체가 동적으로 결정된다.
 
+<br />
+
 > [!NOTE]
 >
-> **바인딩**
+> ### 바인딩
 >
 > - 값과 식별자 사이의 연관 관계
 > - 함수 또는 메소드를 호출한 대상에 실제 함수를 연결해주는 것
@@ -42,8 +46,6 @@ JavaScript 함수는 호출될 때 매개변수 인자값 이외에 arguments �
 >
 > JS는 계속 업데이트되고 있는 언어이기 때문에, 새로운 문법들과 기능들이 추가되고 변경된다. 이렇게 수정된 기능들을 바로 적용하면 레거시 코드를이 오작동을 일으키기 때문에, 이를 방지하고자 엄격모드에서만 변경 사항들이 적용되도록 설계했다.
 
-</aside>
-
 엄격모드를 적용하는 방법은 스크립트 가장 상단에 `"use strict"`를 명시하면 된다.
 
 특정 함수에서만 엄격모드를 적용하고 싶다면, 함수 내부의 가장 상단에 `"use strict"`를 명시하면 된다.
@@ -59,6 +61,8 @@ JavaScript 함수는 호출될 때 매개변수 인자값 이외에 arguments �
   'use strict' // 스크립트 최상단에 명시해야 엄격모드 적용됨
 </script>
 ```
+
+<br />
 
 # this 바인딩 (default, implicit, explicit, new, arrow function)
 
@@ -194,7 +198,7 @@ JavaScript의 모든 함수는 `call()`, `apply()`, `bind()`라는 내장 메서
 
 자동으로 부여되는 상황별 this의 규칙을 깨고 this에 명시한 별도의 값을 저장하는 방법이라고 할 수 있다.
 
-### call(), apply()
+### ✔️ call(), apply()
 
 ```tsx
 const obj = { a: 20 };
@@ -229,49 +233,49 @@ obj.method.call({ a: 4 }, 5, 6); // 4 5 6
 obj.method.apply({ a: 4 }, [5, 6]); //  4 5 6
 ```
 
-- call / apply 메서드 활용
+### call / apply 메서드 활용
 
-  - 유사배열객체(array-like-object)에 배열 메서드 적용 → Array.from(ES6) 등장으로 잘 쓰지 않음
-  - 생성자 함수 내부에서 다른 생성자 함수를 호출해 공통된 내용의 반복 제거
+- 유사배열객체(array-like-object)에 배열 메서드 적용 → Array.from(ES6) 등장으로 잘 쓰지 않음
+- 생성자 함수 내부에서 다른 생성자 함수를 호출해 공통된 내용의 반복 제거
 
-    ```tsx
-    function Person(name, gender) {
-      this.name = name;
-      this.gender = gender;
-    }
+  ```tsx
+  function Person(name, gender) {
+    this.name = name;
+    this.gender = gender;
+  }
 
-    function Employee(name, gender, company) {
-      Person.apply(this, [name, gender]); // this는 employee 인스턴스
-      this.company = company;
-    }
+  function Employee(name, gender, company) {
+    Person.apply(this, [name, gender]); // this는 employee 인스턴스
+    this.company = company;
+  }
 
-    function Student(name, gender, school) {
-      Person.call(this, name, gender); // this는 student 인스턴스
-      this.school = school;
-    }
+  function Student(name, gender, school) {
+    Person.call(this, name, gender); // this는 student 인스턴스
+    this.school = school;
+  }
 
-    const inst = new Employee("sunny", "female", "Google");
-    ```
+  const inst = new Employee("sunny", "female", "Google");
+  ```
 
-  - 배열의 값들을 여러 인자로 전달할 때 → spread operation으로 잘 쓰지 않음
-  - 상위 컨텍스트의 this를 내부함수나 콜백 함수에 전달
+- 배열의 값들을 여러 인자로 전달할 때 → spread operation으로 잘 쓰지 않음
+- 상위 컨텍스트의 this를 내부함수나 콜백 함수에 전달
 
-    ```tsx
-    const obj = {
-      outer: function () {
-        console.log(this); // obj
-        const innerFunc = function () {
-          console.log(this);
-        };
+  ```tsx
+  const obj = {
+    outer: function () {
+      console.log(this); // obj
+      const innerFunc = function () {
+        console.log(this);
+      };
 
-        innerFunc.call(this); // obj
-      },
-    };
+      innerFunc.call(this); // obj
+    },
+  };
 
-    obj.outer();
-    ```
+  obj.outer();
+  ```
 
-### bind()
+### ✔️ bind()
 
 ```tsx
 const obj = { a: 20 };
