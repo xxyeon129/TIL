@@ -310,3 +310,158 @@ Internet (대문자): 전세계적으로 널리 사용되고 있는 TCP/IP를 �
 - **무선망 이용:** 무선 LAN + 유선 LAN
 - **인터넷에 직접 연결:** 큰 기관이나 회사가 하나의 지역 ISP가 되어 인터넷에 직접 연결
   - 기관이 ISP로부터 고속 WAN을 임대하여 지역 ISP에 연결
+
+<br />
+
+# 04 인터넷 역사
+
+## 초기의 역사
+
+### 패킷 - 교환망의 탄생
+
+1961년 MIT의 클라인락(Leonard Kleinrock)에 의해 처음 발표
+
+### ARPANET
+
+- 미국방성이 정보 공유를 위한 컴퓨터 연결 관심
+- 1967년 ARPA(Advanced Research Project Agency)는 ACM(Association for Computing Machinery; 컴퓨터과학 연구모임 연합회) 모임에서 각 호스트를 IMP(Interface Message Processor)라는 특정 컴퓨터에 연결하고, IMP들을 서로 연결하는 ARPANET이라는 아이디어 제안
+- 1969년 4개의 노드(UCLA, UCSB. SRI, UU)를 네트워크로 구성, NCP(Network Computer Protocol)라는 소프트웨어가 호스트간 통신 제공
+
+## 인터넷의 탄생
+
+- 1972년 빈 서프 + 밥 칸은 게이트웨이(gateway)라는 장비를 고안
+
+### TCP/IP
+
+- 1973년 종단-대-종단 패킷 전달을 위한 프로토콜 제안
+- 1977년 인터넷 시연(ARPANET, 패킷 라디오, 패킷 위성)
+- 네트워크간 연결 프로토콜을 TCP/IP로 부르기 시작
+- 1981년 UNIX 운영체제에 TCP/IP 포함 배포
+- 1983년 TCP/IP가 ARPANET의 공식적인 프로토콜이 됨
+
+### MILNET
+
+### CSNET
+
+### NSFNET
+
+National Science Foundation Network
+
+- 1986년 NSF는 NSFNET을 지원
+- 5개의 슈퍼컴퓨터를 T1라인(1.540Mbps)으로 연결하는 백본으로 미국 전역에 대한 연결을 제공
+- 1955년에 연구용 네트워크로 변경
+
+### ASNET
+
+Advanced Network and Service
+
+- IBM, Merit, MCI사가 새로운 고속 인터넷 백본을 구축
+
+## 오늘의 인터넷
+
+### 월드 와이드 웹
+
+World Wide Web
+
+1990년대 유럽입자물리연구소(CERN)에 있는 팀 버너스리에 의해 개발
+
+> [!NOTE]
+> 월드 와이드 웹을 많이 사용하는 이유: 웹 서비스에서 멀티미디어 데이터를 많이 주고받을 수 있음
+
+### 멀티미디어
+
+Voice over IP(telephony), Video over IP(Skype), View sharing(YouTube), Television over IP(PPLive = 중국 화중대, P2P형식 스트림 비디오 전송 시스템)
+
+### 대등-대-대등 응용
+
+peer-to-peer 네트워킹 또한 많은 잠재성을 가진 새로운 통신 분야
+
+ex. 소리바다, 토렌트 (개인 간 공유 시스템)
+
+# 05 프로토콜과 표준
+
+## 프로토콜 (Protocol)
+
+- 개체 간에 이루어지는 데이터 통신을 제어하는 규칙들의 집합
+
+**주요 요소 (3)**
+
+- **구문(Syntax)**
+  - “무엇을?”에 해당
+  - 데이터 구조와 형식, 부호화, 크기
+  - 데이터가 어떤 순서로 표현되는가에 관한 내용
+- **의미(Semantics)**
+  - “어떻게?”에 해당
+  - 데이터 형태에 대해 어떻게 해석하고, 어떤 동작을 취할 것인가?
+  - 전송 제어 및 오류 처리를 위한 제어 정보 등을 포함
+- **타이밍(Timing)**
+  - “언제?”에 해당
+  - 언제 데이터를 전송해야 할 것인가와 얼마나 빠른 속도로 전송할 것인가?
+  - 수신자와 송신자 간의 데이터 전송 시간과 속도 조절
+
+## 표준(Standard)
+
+- 사회 이익 증진을 목적으로 과학기술 및 경험의 종합적인 결론이나 이해 관계자의 협력과 모든 의견, 대다수의 승인에 의해서 작성된 기술 규격서 또는 그 외의 문서
+- 통신기기 시장을 개방적이고 경쟁적으로 만들기 위한 관리 문서
+- 국제 또는 국내의 데이터 통신 기술 및 처리에 대한 호환성 보장
+
+- **표준의 분류**
+  - `법률 표준`(by law): 공식적으로 공인된 기관에 의해 입법화된 표준
+  - `사실 표준`(by fact): 신제품이나 신기술의 기능을 규정한 제조업체에 의해 제정된 표준
+    - `특허(proprietary)/폐쇄(closed) 표준`: 영리기관이 자사 제품의 기본 원리를 창안한 것으로 독점적 권리 소유
+    - `비특허(non-proprietary)/개방(open) 표준`: 집단이나 위원회에서 개발하여 공개한 표준
+
+### 국제 표준
+
+- 1850년대 이후 필요성 대두
+- 지역적 한계를 극복하고 국제 교류를 활성화하기 위함
+
+- **국제 표준화 기구(ISO)**
+
+  - International Standards Organization
+  - 각국의 표준제정위원회에서 선정된 위원들로 구성된 다국적 기구
+  - 수행 업무
+    - 표준 및 관련 활동의 세계적인 조화를 촉진
+    - 국제표준의 개발, 발간, 세계적인 보급
+    - 회원기관 및 기술위원회의 작업에 관한 정보 교환의 주선
+    - 표준 관련 사안에 관한 다른 국제기구와의 협력
+
+- **국제전기통신연합(ITU-T)**
+
+  - International Telecommunications Union
+  - CCITT(Consultative Committee for International Telegraphy and Telephony) 후신
+  - 일반 전기통신, 전화, 데이터 통신 시스템 표준
+  - 1947년 UN 산하기관으로 창설
+
+- **미국 국립 표준원(ANSI)**
+
+  - American National Standards Institute
+  - 미국의 표준안을 제정하는 사단법인, ISO의 미국 대표단체
+  - 미국 및 미국 시민의 복리 증진을 위해서 수행
+  - 미국 내 임의 표준의 국가 조정 기구로서 역할
+  - www.ansi.org
+
+- **전기전자공학회(IEEE)**
+
+  - Institute of Electrical and Electronics Engineers
+  - 세계에서 가장 규모가 큰 전문공학 학회
+  - 전기, 전자, 전기통신, 컴퓨터 분야의 전문 공학 학회
+  - 전기 공학, 전자 공학, 무선 공학, 컴퓨터 공학 및 공학의 제반 관련 분야의 학술 증진, 창안, 제품 품질 제고
+  - www.ieee.org
+
+- EIA; Electronic Industries Association (미국 전자 산업 협회)
+
+  - 미국의 전자기기 제조업체를 대표하는 단체
+  - 전자기기 관련 산업을 촉진하기 위해 설립된 비영리 기관
+
+- NIST; National Institute Standards and Technology(미국 국립 표준 기술원)
+  - 1901년에 미국 상무부에서 창설된 미국 표준 기관
+  - 경제 분야의 보안을 강화하고 삶의 질을 개선하는 방법으로 측정 과학, 표준 및 기술을 발전하여 미국의 혁신과 산업경쟁력을 촉진
+
+### 포럼(Forum)
+
+사회자 지도 하에 한 사람/여러 사람이 연설하고, 그에 대해 청중이 질문하면서 토론을 진행하는 방식
+
+- 기업과 대학, 사용자와 공동 작업을 하여 신기술을 시험하고, 평가하며, 표준을 제정
+- 광대역(Broadband) 포럼
+- 인터넷(Internet) 포럼
