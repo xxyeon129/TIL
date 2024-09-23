@@ -53,7 +53,7 @@ i는 2부터 n-1까지 다 비교해서 확인해야 함 (2 ≤ i ≤ n)
 
 = (i+1)/2 - 1/i
 
-![insertSort-average-time-complexity.png](./img/ch07-insertSort-average-time-complexity.png)
+<img width="740" alt="ch07-insertSort-average-time-complexity" src="https://github.com/user-attachments/assets/1a2bb801-f352-4d21-82ed-bb2123e9a325">
 
 # HeapSort
 
@@ -159,7 +159,7 @@ public ststic keyType root(heap H) {
 | …     | …          | …                                            |
 | d-1   | 2^(d-1)    | 0                                            |
 
-![makeHeap-worst-case-time-complexity.png](./img/ch07-makeHeap-worst-case-time-complexity.png)
+<img width="570" alt="ch07-makeHeap-worst-case-time-complexity" src="https://github.com/user-attachments/assets/6a661f3e-4c84-4f0a-9e38-ee0c980696ff">
 
 - 노드 갯수 2^j개
 - (최악의 경우) 비교 횟수: 각 노드가 d-j-1번
@@ -180,7 +180,7 @@ public ststic keyType root(heap H) {
 
 모든 레벨(from d-1 to 1)의 경우 **n lg n - 2n + 2**
 
-![ch07-removeKeys-worst-case-time-complexity.png](./img/ch07-removeKeys-worst-case-time-complexity.png)
+<img width="496" alt="ch07-removeKeys-worst-case-time-complexity" src="https://github.com/user-attachments/assets/65abc075-e7bb-4205-8f02-fc9102d09ab6">
 
 # Lower Bounds for Sorting Only by Comparisons of Keys
 
