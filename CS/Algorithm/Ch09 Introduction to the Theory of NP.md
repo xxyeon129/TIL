@@ -162,7 +162,7 @@ A의 instance x를 → B의 instance y로 바꿔서 그 instance를 푼 결과 �
 
 ### **Polynomial-time Many-One Reducibility**
 
-![Polynomial-time Many-One Reducibility.png](./img/ch09.png)
+<img width="80" alt="ch09" src="https://github.com/user-attachments/assets/9d349c73-504c-4e5c-9411-f5897bb629b8">
 
 - B의 알고리즘을 이용해 A를 풀 수 있다
 - A is reducible to B (A reduces to B)
