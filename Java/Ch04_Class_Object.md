@@ -284,3 +284,135 @@ public class AccountTest {
 	}
 }
 ```
+
+<br />
+
+# 객체의 생성과 소멸
+
+- 객체는 생성되어서 사용되다가 사용이 끝나면 파괴된다.
+- 객체의 수명: 객체가 생성(인스턴스화) ~ 더 이상 필요하지 않고 메모리에서 제거
+
+# 참조 변수와 대입 연산
+
+- 기초 변수와 참조 변수는 대입 연산에서 상당히 다르게 동작한다.
+
+```java
+int x = 10, y = 20;
+y = x; // x의 값이 y로 대입된다.
+
+Television tv1 - new Television();
+Television tv2 = tv1; // 객체는 하나만 존재
+```
+
+- 기초 변수와 참조 변수는 대입 연산에서 상당히 다르게 동작한다.
+
+```java
+tv2.channel = 11;
+System.out.println(tv1.channel);
+System.out.println(tv2.channel);
+```
+
+# 객체의 소멸과 가비지 컬렉션
+
+- JAVA에는 객체를 생성하는 연산자가 있지만, 객체를 삭제하는 연산자는 없다.
+- 가비지 컬렉션(garbage collection): 더 이상 사용되지 않는 객체가 차지하는 메모리를 회수하여 새 객체를 위한 공간을 확보하는 자동 메모리 관리 프로세스
+
+## Garbage Collector; 가비지 컬렉터
+
+- heap 메모리에서 더 이상 필요 없는 객체를 찾아 지우는 작업을 한다.
+- 가비지 컬렉터는 JVM의 중요한 부분.
+
+## 가비지 컬렉션 요청
+
+개발자는 System 객체의 `gc()` 메소드를 호출해서 가비지 컬렉션을 요청할 수 있다. 하지만 가비지 컬렉터의 실행 여부는 JVM이 판단한다.
+
+```java
+System.gc(); // 가비지 컬렉션 요청
+```
+
+## 인자 전달
+
+- **call-by-value**: 메소드의 매개변수 값(기초 변수)이 복사되어 전달
+- **call-by-reference:** 메소드의 매개변수로 객체를 전달하게 되면 객체의 참조값(메모리 주소)이 복사되어 전달
+    - 배열도 객체이기 때문에 배열을 전달하는 것은 배열 참조 변수를 복사하는 것이다.
+
+```java
+
+```
+
+# 정적 멤버
+
+- 여러 개의 객체가 하나의 변수를 공유해야 하는 경우가 있다.
+- 정적 멤버(static member) 또는 클래스 멤버(class member): 인스턴스가 아닌 클래스 자체에 속하는 필드(변수) 또는 메서드
+
+- 정적 메소드도 정적 변수와 마찬가지로 static 수식자를 메소드 앞에 붙여서 만든다.
+    
+    ```java
+    public class Math {
+    	public static double squrt(double a) {
+    		...
+    	}
+    }
+    ...
+    double value = Math.sqrt(9.0);
+    ```
+    
+
+- power(), abs() 정적 메소드 제공
+    
+    ```java
+    class MyMath {
+    	public static int abs(int x) { return x>0?x:-x; }
+    	public static int power(int base, int exponent) {
+    		int result = 1;
+    		for(int i = 1; i <= exponent; i++)
+    			result *= base;
+    		return result;
+    	}
+    }
+    ```
+    
+    ```java
+    public class MyMathTest {
+    	public static void main(String args[]) 
+    		System.out.println("10의 3승은" + MyMath.power(10, 3)); // Math.pow(10, 3)
+    		// 10의 3승은 1000
+    }
+    ```
+    
+
+- 정적 메소드는 정적 멤버만 사용할 수 있다
+    
+    ```java
+    class Test {
+    	int a; // 인스턴스 변수
+    	static int b; // 정적 변수
+    	
+    	void sub1 () {a = 0; } // 정상 작동
+    	static void sub2 () { a=0; } // 오류! 정적 메소드에서는 인스턴스 멤버를 사용하면 안 됨	
+    }
+    ```
+    
+- 정적 메소드 안에서 정적 메소드만 호출할 수 있다.
+- 정적 메소드는 this를 사용할 수 없다.
+
+# 동적 객체 배열
+
+- 제네릭 프로그래밍에서 `<>` 기호는 클래스와 메소드가 다양한 타입의 객체와 작업할 수 있도록 하며, 타입 안정성을 제공
+- 필요에 따라 확장할 수 있는 동적 배열을 제공
+```java
+ArrayList<Type> listName = new ArrayList<Type>(); // ArrayList 생성
+
+listName.add(element); // Add to the end
+
+listName.add(index, element); // Insert at a specific index
+
+Type element = listName.get(index); // Get element at index
+
+listName.set(index, element); // Replace element at index
+
+listName.remove(index); // Remove element at
+indexlistName.remove(element); // Remove specific element
+
+int size = listName.size(); // Get number of elements
+```
