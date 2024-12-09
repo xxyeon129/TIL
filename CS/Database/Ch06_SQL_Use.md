@@ -147,3 +147,67 @@ DROP TABLE 테이블_이름;
 ```
 
 - 참조(자식) 테이블을 삭제한 후 테이블 삭제 가능
+
+<br />
+
+# 02 SQL 데이터 제어문**(DCL)**
+
+## ✅ 사용자 및 권한 관리
+
+### ✔️ 계정 생성: `CREATE USER`
+
+```sql
+CREATE USER 사용자_계정 IDENTIFIED BY '비밀번호';
+```
+
+```sql
+CREATE USER 'user1'@'127.1.1.1' IDENTIFIED BY '1111';
+CREATE USER 'user2'@'localhost' IDENTIFIED BY '2222';
+CREATE USER 'user3'@'%' IDENTIFIED BY '3333';
+CREATE USER 'manager'@'%' IDENTIFIED BY '1234';
+
+// 생성된 사용자 계정 정보 확인
+SELECT host, user
+FROM mysql.user;
+
+// 현재 MySQL 사용자 표시
+SELECT user();
+```
+
+### ✔️ 권한 부여: GRANT
+
+```sql
+GRANT 권한_내용 ON 권한_대상 TO 사용자_계정;
+GRANT 권한_내용 ON 권한_대상 TO 사용자_계정 WITH GRANT OPTION;
+```
+
+```sql
+GRANT INSERT, UPDATE, DELETE ON univDB.* TO 'user1'@'127.1.1.1';
+GRANT ALL ON *.* TO 'user3'@'%' WITH GRANT OPTION;
+GRANT SELECT ON univDB.학생 TO 'user2'@'localhost';
+GRANT UPDATE(점수) ON 수강 TO 홍길동
+
+// 사용자 계정의 권한 확인
+SHOW GRANTS FOR 'user1'@'127.1.1.1'; -- user1 사용자의 권한 표시
+SHOW GRANTS; -- 현재 접속 사용자의 권한 표시
+```
+
+### ✔️ 권한 철회: REVOKE
+
+```sql
+REVOKE 권한_내용 ON 권한_대상 FROM 사용자_계정;
+```
+
+```sql
+REVOKE DELETE ON univDB.* FROM 'user1'@'127.1.1.1';
+```
+
+### ✔️ 계정 삭제: DROP USER
+
+```sql
+DROP USER 사용자_계정
+```
+
+```sql
+DROP USER 'user1'@'127.1.1.1';
+```
