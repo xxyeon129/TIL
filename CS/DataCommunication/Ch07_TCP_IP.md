@@ -741,3 +741,46 @@ IP를 효율적으로 사용하기 위한 방법
 - 2️⃣ 제한적이긴 하지만, **외부 서비스**(E-mail, FTP, Netnews, Remote login)에 **접근할 필요**가 있는 호스트
 - 3️⃣ **네트워크 층에서** **인터넷으로의 연결이 필요**한 호스트 → 공인 IP로 구성
   - 분류 3의 호스트는 공인IP로 구성
+
+<br />
+
+# 05 UDP (User Datagram Protocol)
+
+## ✅ UDP 특성
+
+1️⃣ **비연결형 (Connectionless)**
+
+- TCP와 달리 연결 설정 없이 데이터 전송
+- 연결 설정을 위한 지연시간이 걸리지 않음
+
+2️⃣ **비 상태정보 (Non-State)**
+
+- 연결 정보나 상태 정보를 저장하지 X
+
+3️⃣ **경량의 오버헤드 (Small Overhead)**
+
+- TCP Segment의 헤더는 20byte지만 UDP는 8byte
+
+4️⃣ **비정규적인 송신율 (Unregulated Send Rate)**
+
+- 일부 패킷의 손실이 생기더라도
+  최소 전송률을 요구하는 실시간 전송의 경우 → 비정규적 송신율 이요
+
+**5️⃣ 최선의 서비스 (Best Effort)**
+
+서비스 지연 없이 최선의 서비스 제공
+
+## ✅ UDP 헤더
+
+**[포트번호 (Port Number)]**
+
+- 송신/수신 process를 구분
+- IP로부터 들어오는 데이터를 수신하기 위해 목적지 포트 번호 사용
+
+**[UDP 길이(UDP Length)]**
+
+UDP 헤더와 + 데이터의 byte 길이를 합친 값
+
+**[UDP Checksum]**
+
+UDP 헤더, UDP 데이터 모두 포함하여 체크
