@@ -360,7 +360,7 @@ Timout 타이머 종료 시까지 **해당 경로가 없으면 → 도착 불가
 
 <br />
 
-# 03 OSPF (Open Shortest Path First)
+# 04 OSPF (Open Shortest Path First)
 
 ## ✅ 공개 최단경로 프로토콜 개요
 
@@ -454,3 +454,74 @@ Timout 타이머 종료 시까지 **해당 경로가 없으면 → 도착 불가
 ## ✅ 라우팅 프로토콜 (Routing Protocol)
 
 고속 라우팅이 가능. 정적 라우팅은 사용하지 않고 동적 라우팅을 사용
+
+<br />
+
+# 05 BGP (Border Gateway Protocol)
+
+- 자율시스템(AS, Autonomous System) 사이에서 라우팅 정보를 전달
+  - 초기에는 전체 라우팅 테이블을 교환, 이후에는 변경된 라우팅 테이블만 교환
+  - 목적지에 대한 모든 경로를 보유
+  - 갱신 메시지에는 최적의 경로만 전송
+- 자율시스템(AS, Autonomous System) 상호 간 적용되는 라우팅 프로토콜(Inter-Domain Routing Protocol)
+  - 독립적으로 운용되는 **대규모 네트워크**에서 / 주로 사용되는 라우팅 프로토콜
+- 자율시스템(AS, Autonomous System) 상호 간 **정보 교환**을 위한 라우팅 프로토콜
+  - EGP(Exterior Gateway Protocol) 또는 IGP(Inter-Domain Routing Protocol)
+  - 물리적인 라우터 간에 라우팅하는 관점이 아니라, AS 간에 라우팅이 이루어짐
+- 인터넷을 자율시스템(AS, Autonomous System) 간 연결 경로(Path)로 이루어진 방향성 그래프 집단으로 봄
+- 무한루프 문제점 방지
+  - BGP는 Looping-free하는 라우팅 보장
+- peer 관계 설정 / 네트워크 정보생성, 전달이 분리됨
+  - 신뢰할 만한 TCP 연결에 의해 라우팅 정보 교환
+- Class 없는 주소체계 지원
+
+> [!NOTE]
+>
+> - 피어(peer) 관계: 동등한 관계
+>   - 인증 서버를 두자: 100개의 ID와 PW를 저장. 만약 100번째 컴퓨터가 A에 접속하려고 하면 A의 ID와 PW를 입력해서 연결
+>   - 서버의 역할은 인증 서버. 모든 컴퓨터들은 서버를 통해 인증을 받고 연결
+>   - → Client/Server 환경
+> - 클래스가 없어 CIRD를 지원해 준다
+
+## ✅ BGP 동작 과정
+
+- 경로 설정
+
+  - TCP well-known 포트 179번 사용하여 이웃 노드 간 연결 유지, 갱신 정보 교환
+  - keep alive 메시지를 주기적으로 교환해 상대방의 동작 유무에 대한 정보를 얻음
+    - keep alive: 세션 또는 상대 노드의 생존 여부를 확인하는 매커니즘
+
+- 연결
+  - AS 내부에 BGP 라우팅 프로토콜을 사용하는 라우터가 여러 개 있을 수 있음
+
+> [!NOTE]
+>
+> Keep-alive 메시지: 해당되는 노드가 살아있다
+> kepp alive 메시지는 RIP의 hello 메시지와 비슷함.
+
+### ✔️ 메세지의 종류
+
+1️⃣ **OPEN**
+
+- TCP 3way-HandShake 후 → BGP의 다른 라우터와 이웃관계 설정 시 사용
+- TCP 연결이 성립되면 → 관련 파라미터의 협상을 위해 보냄
+- OPEN을 거절
+  - 중복된 연결 발견 or 버전이 다른 경우
+  - NOTIFICATION 메시지에 원인 알리고 연결 종료
+- 연결 설정 시
+  - KEEPALIVE 메시지 전송하여 연결 설정을 알림
+
+**2️⃣ UPDATE**
+
+- 경로 변동 시 전송
+- 새로운 경로가 더 짧은 경우 → 라우팅 테이블 값 대체
+
+3️⃣ **KEEPALIVE**
+
+- OPEN 메시지에 대한 수신확인 메시지
+- BGP 이웃이 여전히 살아있는지 알기 위해 주기적으로 전송
+
+4️⃣ **NOTIFICATION**
+
+- BGP 이웃에 오류 상태 알림
+- 송신자가 BGP 세션을 종료하고자 할 경우
