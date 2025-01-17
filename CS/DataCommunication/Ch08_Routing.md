@@ -525,3 +525,59 @@ Timout 타이머 종료 시까지 **해당 경로가 없으면 → 도착 불가
 
 - BGP 이웃에 오류 상태 알림
 - 송신자가 BGP 세션을 종료하고자 할 경우
+
+<br />
+
+# 06 그외 라우팅 프로토콜
+
+## ✅ IS-IS (Intermediate System to Intermediate System): 중계 시스템간 접속 (망간 접속)
+
+> [!NOTE]
+>
+> 송신자-수신자가 OSI 7계층을 거쳐 통신
+> AS 내부 라우팅을 레벨1, AS 간 라우팅을 레벨2 라우팅이라고 함
+
+### ✔️ ES-IS (End System to Intermediate System) 라우팅
+
+ES: 네트워크에 연결된 임의의 시스템
+
+- ES와 IS 간 서로를 인식하기 위한 시스템
+- 특정 멀티캐스트 주소로 hello 패킷을 전송해 수행
+  - 각 ES는 ESH(ES Hello) 메시지를 → 서브넷에 속한 모든 IS에 전송
+  - 각 IS는 ISH(IS Hello) 메시지를 → 서브넷에 속한 모든 ES에 전송
+
+### ✔️ IS-IS (Intermediate System to Intermediate System) 라우팅
+
+IS: OSI 계층 모델에서 네트워크 계층(Layer3)에서 라우팅을 하는 노드 (주로 라우터를 의미함)
+
+- 링크 상태 라우팅 프로토콜
+- 전체 네트워크의 토폴로지 계산
+- ES가 다른 ES로 전송 시:
+  - ISH(IS Hello)로 알게 된 임의의 IS에게 패킷 전송
+  - IS는 목적이 ES가 같은 네트워크 → 목적지로 전송하고 / 송신 ES에게 Redirect 패킷 전송하여 이후 패킷은 직접 통신
+  - 목적이 ES가 같은 Area의 다른 네트워크에 속해 있으면 → IS의 정보 교환을 통해 알고 있는 경로를 따라 패킷 전송
+  - IS는 연결된 IS와 ES들에 대한 정보를 포함하는 갱신 패킷을 모든 이웃 IS에 전송
+
+IS-IS 라우팅 계층 (AS 내의 라우팅: Level-1 라우팅, AS 간의 라우팅: Level-2 라우팅)
+
+## ✅ IGRP (Interior Gateway Routing Protocol)
+
+- RIP(Routing Information Protocol)의 단점을 보완하기 위해 개발한 IGP용 라우팅 프로토콜
+- 거리 벡터 라우팅 프로토콜 사용
+- 90초 주기로 라우팅 전체 정보를 브로드캐스팅
+- RIP와 달리 UDP 서비스를 사용하지 않고 직접 IP 포트 88번을 사용하여 서비스 제공
+- 최대 256개까지 홉을 지원, AS 번호를 활용하고 Load Balancing도 지원
+
+## ✅ EIGRP (Enhanced Interior Gateway Routing Protocol)
+
+> [!NOTE]
+> 트래픽이 적고, 네트워크 변화에 빠르게 반응할 수 있다.
+
+- 기존 IGRP보다 효율성, 수렴성 면에서 개선된 버전
+- IGRP처럼 거리벡터 알고리즘에 기초해 라우팅을 수행하나,
+  Link State 알고리즘의 장점(부분적인 라우팅 정보 업데이트, 이웃 발견 등)도 포함
+  혼성(Hybrid) 라우팅 프로토콜
+- EIGRP 패킷: Hello, Update, Reponse, Acknowledge
+- 최대 홉수 224
+- 주기적인 라우팅 업데이트를 하지 않음 (토폴로즈 변화 시만 업데이트)
+- 네트워크 변화에 빠르게 반응
