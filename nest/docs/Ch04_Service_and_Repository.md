@@ -164,3 +164,10 @@ export class MessagesController {
   }
 }
 ```
+
+# Nest 내장 exception 라이브러리로 오류 처리
+
+NotFoundException cmd+클릭해서 클래스 정의로 이동 → 파일이나 탭 우클릭하고 Reveal in Side Bar 클릭 → 모든 종류의 exception이 정의되어 있는 폴더로 이동됨
+
+- 다양한 exception들은 모두 HTTP 표준에 설정된 패턴을 따름
+  - ex. 404 Not Found, 400 Bad Request, 401/403 Forbidden, 500 Internal Error, 503 Timeout 등

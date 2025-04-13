@@ -1,6 +1,13 @@
 // Controllers: Handle incoming requests and outgoing responses
 
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+} from '@nestjs/common';
 
 import { CreateMessageDto } from './dtos/create-message.dto';
 import { MessagesService } from './messages.service';
@@ -30,7 +37,15 @@ export class MessagesController {
 
   @Get('/:id')
   // @Param: argument decorator
-  getMessage(@Param('id') id: string) {
-    return this.messagesService.findOne(id);
+  async getMessage(@Param('id') id: string) {
+    const message = await this.messagesService.findOne(id);
+
+    if (!message) {
+      // NotFoundException: Nest 자체 내부에 정의된 오류
+      // request에서 오류가 나면 Nest가 자동으로 오류를 포착해서 response를 보냄
+      throw new NotFoundException('message not found');
+    }
+
+    return message;
   }
 }
