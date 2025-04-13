@@ -16,6 +16,8 @@ async function bootstrap() {
     next();
   });
 
+  // main.ts에 설정하여 유입되는 모든 요청을 검증 (Pipe를 전역적으로 사용)
+  // 데이터가 무효하다면 (ex. 속성이 없거나 타입이 다르다면) → Pipe를 사용해 request를 거부
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
