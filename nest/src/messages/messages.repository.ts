@@ -3,12 +3,12 @@
 
 import { readFile, writeFile } from 'fs/promises'; // DB(or mockdata)의 콘텐츠를 읽거나 씀
 
-interface Message {
+export interface Message {
   id: number;
   content: string;
 }
 
-interface Messages {
+export interface Messages {
   [key: number]: Message;
 }
 
